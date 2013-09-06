@@ -1,0 +1,17 @@
+Makefile
+_Inline/
+auto/
+blib/
+cover_db/
+pm_to_blib
+*.bak
+*.bs
+*.c
+*.json
+*.o
+*.old
+*.orig
+*.rej
+*.tmp
+*.yml
+*~

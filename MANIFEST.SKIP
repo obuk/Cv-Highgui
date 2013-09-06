@@ -1,0 +1,8 @@
+MYMETA\.(json|yml)$
+Makefile$
+\.(bs|c|o|bak|old|tmp|orig)$
+\~$
+^\#|/\#
+^\.
+^blib
+pm_to_blib

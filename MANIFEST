@@ -1,0 +1,9 @@
+Changes
+Highgui.xs
+lib/Cv/Highgui.pm
+Makefile.PL
+MANIFEST
+MANIFEST.SKIP
+ppport.h
+README
+t/createTrackbar.t
