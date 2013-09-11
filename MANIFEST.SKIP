@@ -1,5 +1,6 @@
 MYMETA\.(json|yml)$
 Makefile$
+\.skip/
 \.(bs|c|o|bak|old|tmp|orig)$
 \~$
 ^\#|/\#

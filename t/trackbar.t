@@ -9,7 +9,7 @@ BEGIN { use_ok('Cv') }
 BEGIN { use_ok('Cv::Highgui', qw(:all)) }
 
 SKIP: {
-	skip('require DISPLAY', 1) unless Cv->hasGUI;
+	skip('no DISPLAY', 1) unless Cv->hasGUI;
 	my ($win, $bar) = ('win', 'bar');
 	my $image = Cv::Image->new([240, 320], CV_8UC3)->zero;
 	Cv->NamedWindow($win);
@@ -24,19 +24,31 @@ SKIP: {
 	is($got[0], undef);
 	is($got[1], undef);
 	ok(!$changed);
-	my $expect = $val + 50;
-	Cv->SetTrackbarPos($bar, $win, $expect);
-	is($got[0], $expect);
+	is(Cv->GetTrackbarPos($bar, $win), $val);
+
+	my $pos = 50;
+	Cv->SetTrackbarPos($bar, $win, $pos);
+	is($got[0], $pos);
 	is($got[1], $data);
-	is($val, $expect);
+	is($val, $pos);
 	ok($changed);
+	is(Cv->GetTrackbarPos($bar, $win), $pos);
+
+	@got = (); $changed = 0; $pos = 60;
+	setTrackbarPos($bar, $win, $pos);
+	is($got[0], $pos);
+	is($got[1], $data);
+	is($val, $pos);
+	ok($changed);
+	is(getTrackbarPos($bar, $win), $pos);
+
 	Cv->WaitKey(1000);
 	Cv->DestroyWindow($win);
 	is($Cv::TRACKBAR{$win}, undef);
 }
 
 SKIP: {
-	skip('require DISPLAY', 1) unless Cv->hasGUI;
+	skip('no DISPLAY', 1) unless Cv->hasGUI;
 
 no_leaks_ok {
 	my $image = Cv::Image->new([240, 320], CV_8UC3)->zero;

@@ -6,4 +6,7 @@ MANIFEST
 MANIFEST.SKIP
 ppport.h
 README
-t/createTrackbar.t
+t/pod-coverage.t
+t/trackbar.t
+t/video.t
+t/window.t
