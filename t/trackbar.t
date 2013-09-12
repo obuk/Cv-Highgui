@@ -20,14 +20,14 @@ SKIP: {
 	$image->ShowImage($win);
 	Cv->WaitKey(1000);
 	is(scalar @{$Cv::TRACKBAR{$win}}, 1);
-	Cv->SetTrackbarPos($bar, $win, $val);
+	setTrackbarPos($bar, $win, $val);
 	is($got[0], undef);
 	is($got[1], undef);
 	ok(!$changed);
-	is(Cv->GetTrackbarPos($bar, $win), $val);
+	is(getTrackbarPos($bar, $win), $val);
 
 	my $pos = 50;
-	Cv->SetTrackbarPos($bar, $win, $pos);
+	setTrackbarPos($bar, $win, $pos);
 	is($got[0], $pos);
 	is($got[1], $data);
 	is($val, $pos);
@@ -58,9 +58,12 @@ no_leaks_ok {
 	createTrackbar('bar2', $win, my $val2 = 20, 100, sub {});
 	createTrackbar('bar3', $win, my $val3 = 30, 100);
 	$image->ShowImage($win);
-	Cv->SetTrackbarPos('bar1', $win, 50);
-	Cv->SetTrackbarPos('bar2', $win, 50);
-	Cv->SetTrackbarPos('bar3', $win, 50);
+	setTrackbarPos('bar1', $win, 50);
+	setTrackbarPos('bar2', $win, 50);
+	setTrackbarPos('bar3', $win, 50);
+	getTrackbarPos('bar1', $win);
+	getTrackbarPos('bar2', $win);
+	getTrackbarPos('bar3', $win);
 	Cv->WaitKey(1000);
 	Cv->DestroyWindow($win);
 };
