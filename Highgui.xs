@@ -2,6 +2,9 @@
 
 #include "Cv.inc"
 
+typedef vector<int> intV;
+typedef vector<uchar> ucharV;
+
 static void cb_trackbar2(int pos, VOID* userdata)
 {
 	callback_t *p = (callback_t*)userdata;

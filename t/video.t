@@ -16,7 +16,7 @@ no_leaks_ok {
 	my $video = VideoCapture();
 	$video->open(0);
 	for (1 .. 30) {
-		last unless my $frame = $video->query;
+		last unless my $frame = $video->read;
 		imshow("Cv", $frame->flip(\0, 1));
 		my $c = waitKey(33);
 		last if $c >= 0 && ($c & 0377) == ord('q');

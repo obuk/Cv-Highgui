@@ -37,6 +37,12 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	setTrackbarPos
 	waitKey
 	VideoCapture
+	imdecode
+    imencode
+    imread
+    imwrite
+    VideoCapture
+    VideoWriter
 ) ] );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
@@ -172,7 +178,7 @@ L<imencode()|http://docs.opencv.org/search.html?q=imencode>
 
 =cut
 
-sub imencode { ($_[0], $_[1]) = ($_[1], $_[0]); goto &Cv::Arr::cvEncodeImageM }
+sub imencode { $_[2] = Cv::Arr::cvEncodeImage(@_[1, 0, 3]) }
 
 =item
 L<imread()|http://docs.opencv.org/search.html?q=imread>
@@ -215,7 +221,7 @@ L<VideoCapture()|http://docs.opencv.org/search.html?q=VideoCapture>
 	sub open {
 		my $self = shift;
 		unless ($self->{CvCapture}) {
-			$self->{CvCapture} = $_[0] =~ m{^(/dev/video)?\d+$}?
+			$self->{CvCapture} = $_[0] =~ /^\d+$/?
 				Cv::cvCaptureFromCAM(@_) : Cv::cvCaptureFromFile(@_);
 		}
 		$self->isOpened;
@@ -230,7 +236,7 @@ L<VideoCapture()|http://docs.opencv.org/search.html?q=VideoCapture>
 		unshift(@_, shift->{CvCapture});
 		goto &Cv::Capture::cvRetrieveFrame
 	}
-	sub query {
+	sub read {
 		unshift(@_, shift->{CvCapture});
 		goto &Cv::Capture::cvQueryFrame
 	}
@@ -281,7 +287,7 @@ L<VideoWriter()|http://docs.opencv.org/search.html?q=VideoWriter>
 	sub release { shift->{CvVideoWriter} = undef }
 	sub write {
 		unshift(@_, shift->{CvVideoWriter});
-		goto &Cv::cvWriteFrame
+		goto &Cv::VideoWriter::cvWriteFrame;
 	}
 }
 

@@ -6,7 +6,7 @@ use Test::More qw(no_plan);
 # use Test::More tests => 2;
 use Test::LeakTrace;
 BEGIN { use_ok('Cv') }
-BEGIN { use_ok('Cv::Highgui', qw(:all)) }
+BEGIN { use_ok('Cv::Highgui', qw(createTrackbar)) }
 
 SKIP: {
 	skip('no DISPLAY', 1) unless Cv->hasGUI;
@@ -20,14 +20,14 @@ SKIP: {
 	$image->ShowImage($win);
 	Cv->WaitKey(1000);
 	is(scalar @{$Cv::TRACKBAR{$win}}, 1);
-	setTrackbarPos($bar, $win, $val);
+	Cv->SetTrackbarPos($bar, $win, $val);
 	is($got[0], undef);
 	is($got[1], undef);
 	ok(!$changed);
-	is(getTrackbarPos($bar, $win), $val);
+	is(Cv->GetTrackbarPos($bar, $win), $val);
 
 	my $pos = 50;
-	setTrackbarPos($bar, $win, $pos);
+	Cv->SetTrackbarPos($bar, $win, $pos);
 	is($got[0], $pos);
 	is($got[1], $data);
 	is($val, $pos);
@@ -35,12 +35,12 @@ SKIP: {
 	is(Cv->GetTrackbarPos($bar, $win), $pos);
 
 	@got = (); $changed = 0; $pos = 60;
-	setTrackbarPos($bar, $win, $pos);
+	Cv->SetTrackbarPos($bar, $win, $pos);
 	is($got[0], $pos);
 	is($got[1], $data);
 	is($val, $pos);
 	ok($changed);
-	is(getTrackbarPos($bar, $win), $pos);
+	is(Cv->GetTrackbarPos($bar, $win), $pos);
 
 	Cv->WaitKey(1000);
 	Cv->DestroyWindow($win);
@@ -58,12 +58,12 @@ no_leaks_ok {
 	createTrackbar('bar2', $win, my $val2 = 20, 100, sub {});
 	createTrackbar('bar3', $win, my $val3 = 30, 100);
 	$image->ShowImage($win);
-	setTrackbarPos('bar1', $win, 50);
-	setTrackbarPos('bar2', $win, 50);
-	setTrackbarPos('bar3', $win, 50);
-	getTrackbarPos('bar1', $win);
-	getTrackbarPos('bar2', $win);
-	getTrackbarPos('bar3', $win);
+	Cv->SetTrackbarPos('bar1', $win, 50);
+	Cv->SetTrackbarPos('bar2', $win, 50);
+	Cv->SetTrackbarPos('bar3', $win, 50);
+	Cv->GetTrackbarPos('bar1', $win);
+	Cv->GetTrackbarPos('bar2', $win);
+	Cv->GetTrackbarPos('bar3', $win);
 	Cv->WaitKey(1000);
 	Cv->DestroyWindow($win);
 };
