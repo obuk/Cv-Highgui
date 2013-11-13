@@ -11,16 +11,19 @@ BEGIN { use_ok('Cv::Highgui', qw(:all)) }
 SKIP: {
 	skip('no DISPLAY', 1) unless Cv->hasGUI;
 
-no_leaks_ok {
 	Cv->namedWindow('Cv', 0);
 	my $video = VideoCapture();
-	$video->open(0);
+
+no_leaks_ok {
+	skip('no camera', 1) unless $video->open(0);
+
 	for (1 .. 30) {
 		last unless my $frame = $video->read;
 		imshow("Cv", $frame->flip(\0, 1));
 		my $c = waitKey(33);
 		last if $c >= 0 && ($c & 0377) == ord('q');
 	}
+
 };
 
 }

@@ -256,7 +256,7 @@ BEGIN { use_ok('Cv::Highgui', qw(:all)) }
 		is(scalar @_, 5);
 		my ($filename, $fourcc, $fps, $frame_size, $is_color) = @_;
 		is($filename, 'filename');
-		is($fourcc, 'fourcc');
+		is($fourcc, CV_FOURCC('fourcc'));
 		is($fps, 'fps');
 		is($frame_size, 'frame_size');
 		is($is_color, 'is_color');

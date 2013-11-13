@@ -70,6 +70,10 @@ L<createTrackbar()|http://docs.opencv.org/search.html?q=createTrackbar>
   createTrackbar($trackbarname, $winname, $value, $count, \&onChange, $userdata);
   createTrackbar($trackbarname, $winname, my $value, $count);
 
+=cut
+
+sub createTrackbar { goto &Cv::cvCreateTrackbar }
+
 =item
 L<getTrackbarPos()|http://docs.opencv.org/search.html?q=getTrackbarPos>
 
@@ -178,7 +182,10 @@ L<imencode()|http://docs.opencv.org/search.html?q=imencode>
 
 =cut
 
-sub imencode { $_[2] = Cv::Arr::cvEncodeImage(@_[1, 0, 3]) }
+sub imencode {
+	$_[3] = my $params = \0 unless defined $_[3];
+	$_[2] = Cv::Arr::cvEncodeImage(@_[1, 0, 3]);
+}
 
 =item
 L<imread()|http://docs.opencv.org/search.html?q=imread>
@@ -279,7 +286,7 @@ L<VideoWriter()|http://docs.opencv.org/search.html?q=VideoWriter>
 	sub open {
 		my $self = shift;
 		unless ($self->{CvVideoWriter}) {
-			$self->{CvVideoWriter} = Cv::cvCreateVideoWriter(@_);
+			$self->{CvVideoWriter} = Cv->CreateVideoWriter(@_);
 		}
 		$self->isOpened;
 	}
@@ -314,7 +321,7 @@ L<Cv>
 
 =head1 AUTHOR
 
-Koichi Kubo, E<lt>obuk@obuk.orgE<gt>
+Koichi Kubo, E<lt>k@obuk.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 

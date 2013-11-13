@@ -6,7 +6,10 @@ MANIFEST
 MANIFEST.SKIP
 ppport.h
 README
+t/cv2.t
 t/pod-coverage.t
 t/trackbar.t
+t/usage.t
 t/video.t
 t/window.t
+typemap

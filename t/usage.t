@@ -17,6 +17,12 @@ sub usage {
 	qr/[Uu]sage: $_ at $file line $line/;
 }
 
-throws_ok { createTrackbar() } usage('createTrackbar(trackbarName, windowName, value, count, onChange=NO_INIT, userdata=NO_INIT)');
+throws_ok { createTrackbar() } usage('cvCreateTrackbar(trackbarName, windowName, value, count, onChange=NULL, userdata=NULL)');
+throws_ok { createTrackbar('trackbarname') } usage('cvCreateTrackbar(trackbarName, windowName, value, count, onChange=NULL, userdata=NULL)');
+throws_ok { createTrackbar('trackbarname', 'windowname') } usage('cvCreateTrackbar(trackbarName, windowName, value, count, onChange=NULL, userdata=NULL)');
+throws_ok { createTrackbar('trackbarname', 'windowname', 0) } usage('cvCreateTrackbar(trackbarName, windowName, value, count, onChange=NULL, userdata=NULL)');
+throws_ok { createTrackbar('trackbarname', 'windowname', 0, -1) } qr/OpenCV Error:/;
+
+
 throws_ok { getTrackbarPos() } usage('cvGetTrackbarPos(trackbarName, windowName)');
 throws_ok { setTrackbarPos() } usage('cvSetTrackbarPos(trackbarName, windowName, pos)');
